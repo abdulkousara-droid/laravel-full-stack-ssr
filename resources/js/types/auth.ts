@@ -8,6 +8,21 @@ export type User = {
     created_at: string;
     updated_at: string;
     [key: string]: unknown;
+    permissions: string[];
+    roles: string[];
+};
+
+export type PaginatedData<T> = {
+    data: T[];
+    links: Record<string, string>
+};
+
+export type Feature = {
+    id: number;
+    name: string;
+    description: string;
+    user: User;
+    created_at: string;
 };
 
 export type Auth = {
