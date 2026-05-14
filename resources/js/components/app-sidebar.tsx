@@ -13,7 +13,7 @@ import {
     SidebarMenuButton,
     SidebarMenuItem,
 } from '@/components/ui/sidebar';
-import { dashboard, feature} from '@/routes';
+import { dashboard } from '@/routes';
 import type { NavItem } from '@/types';
 
 const mainNavItems: NavItem[] = [
@@ -23,8 +23,8 @@ const mainNavItems: NavItem[] = [
         icon: LayoutGrid,
     },
     {
-        title: 'Feature',
-        href: feature(),
+        title: 'Features',
+        href: '/feature',
         icon: TableProperties,
     },
 ];

@@ -13,7 +13,7 @@ Route::redirect('/', '/dashboard');
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::inertia('dashboard', 'dashboard')->name('dashboard');
 
-    Route::get('/feature', [FeatureController::class, 'index'])->name('feature');
+    Route::resource('/feature', FeatureController::class);
 });
 
 
