@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input'; // This is your custom textarea/input
 import { Label } from '@/components/ui/label';
 import { TextAreaInput } from '@/components/ui/TextAreaInput';
+import type { Feature } from '@/types';
 
 
 interface FeatureForm {
@@ -11,24 +12,24 @@ interface FeatureForm {
     description: string;
 }
 
-export default function Create() {
-    const { data, setData, post, processing, errors } = useForm<FeatureForm>({
-        name: '',
-        description: '',
+export default function Edit({ feature }: { feature: Feature }) {
+    const { data, setData, put, processing, errors } = useForm<FeatureForm>({
+        name: feature.name,
+        description: feature.description,
     });
 
-    const submit: React.FormEventHandler = (e) => {
-      e.preventDefault();
-      post(route('feature.store'), {
-        preserveScroll: true
-      });
-    }
+    const updateFeature: React.FormEventHandler = (e) => {
+        e.preventDefault();
+        put(route('feature.update', feature.id), {
+            preserveScroll: true,
+        });
+    };
 
     return (
         <>
-            <Head title="Features Create" />
+            <Head title="Edit Feature" />
             <div className="flex h-full flex-1 flex-col gap-4 overflow-x-auto rounded-xl p-4">
-                <form className="space-y-6" onSubmit={submit}>
+                <form className="space-y-6" onSubmit={updateFeature}>
                     <div className="grid gap-2">
                         <Label htmlFor="name">New Feature</Label>
                         <Input

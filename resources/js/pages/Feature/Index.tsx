@@ -2,12 +2,6 @@ import { Head, Link, usePage, } from '@inertiajs/react';
 import FeatureItem from "@/components/FeatureItem";
 import {Button} from "@/components/ui/button";
 import type { PaginatedData, Feature } from '@/types';
-import {ChevronUp} from "lucide-react";
-import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
 
 
 
