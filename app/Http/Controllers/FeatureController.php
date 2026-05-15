@@ -41,7 +41,7 @@ class FeatureController extends Controller
         $data['user_id'] = auth()->id();
 
         Feature::create($data);
-        return to_route('features.index')->with('success', 'Feature created successfully');
+        return to_route('feature.index')->with('success', 'Feature created successfully');
     }
 
     /**
@@ -75,7 +75,7 @@ class FeatureController extends Controller
         ]);
 
         $feature->update($data);
-        return to_route('features.index')->with('success', 'Feature updated successfully');
+        return to_route('feature.index')->with('success', 'Feature updated successfully');
     }
 
     /**
@@ -84,6 +84,6 @@ class FeatureController extends Controller
     public function destroy(Feature $feature)
     {
         $feature->delete();
-        return to_route('features.index')->with('success', 'Feature deleted successfully');
+        return to_route('feature.index')->with('success', 'Feature deleted successfully');
     }
 }

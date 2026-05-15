@@ -5,6 +5,8 @@ import { ChevronDown, ChevronUp } from 'lucide-react';
 
 
 export default function Show({ feature }: {feature: Feature}) {
+  console.log(feature);
+
     return (
         <>
             <Head title={`Feature ${feature.name}`} />
@@ -27,16 +29,8 @@ export default function Show({ feature }: {feature: Feature}) {
                   <div className={'flex-1'}>
                     <h2 className={'mb-2 text-2xl'}>{feature.name}</h2>
                     <p>
-                      {isExpanded
-                        ? feature.description
-                        : feature.description.substring(0, 200) + '...'}
+                      {feature.description}
                     </p>
-                    <button
-                      onClick={toggleExpansion}
-                      className={'text-amber-500 hover:underline'}
-                    >
-                      {isExpanded ? 'Read less' : 'Read more'}
-                    </button>
                   </div>
                 </div>
               </div>
