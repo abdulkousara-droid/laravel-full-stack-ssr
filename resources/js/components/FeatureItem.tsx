@@ -21,7 +21,7 @@ export default function FeatureItem({ feature }: { feature: Feature }) {
                         <ChevronUp className="size-8 md:size-10" />
                     </button>
                     <span className="text-xl font-semibold md:text-2xl">
-                        12
+                       {feature.upvote_count}
                     </span>
                     <button className="transition-colors hover:text-amber-500">
                         <ChevronDown className="size-8 md:size-10" />

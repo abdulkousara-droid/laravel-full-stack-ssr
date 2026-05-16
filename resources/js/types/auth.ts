@@ -23,6 +23,7 @@ export type Feature = {
     description: string;
     user: User;
     created_at: string;
+    upvote_count: number;
 };
 
 export type Auth = {
