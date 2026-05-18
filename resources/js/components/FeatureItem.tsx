@@ -1,8 +1,8 @@
 import { Link } from '@inertiajs/react';
-import { ChevronDown, ChevronUp } from 'lucide-react';
 import { useState } from 'react';
 import type { Feature } from '@/types';
 import FeatureActionsDropdown from "@/components/FeatureActionsDropdown";
+import FeatureUpvoteDownvote from "@/components/FeatureUpvoteDownvote";
 
 export default function FeatureItem({ feature }: { feature: Feature }) {
     const [isExpanded, setIsExpanded] = useState(false);
@@ -14,20 +14,8 @@ export default function FeatureItem({ feature }: { feature: Feature }) {
     return (
         <div className="relative flex min-h-[100vh] overflow-hidden rounded-xl border border-sidebar-border/70 p-4 md:min-h-min dark:border-sidebar-border">
             <div className="flex w-full gap-4 pr-8">
-                <FeatureActionsDropdown feature={feature}/>
-                {' '}
-                <div className="flex flex-col items-center justify-center gap-2">
-                    <button className="transition-colors hover:text-amber-500">
-                        <ChevronUp className="size-8 md:size-10" />
-                    </button>
-                    <span className="text-xl font-semibold md:text-2xl">
-                       {feature.upvote_count}
-                    </span>
-                    <button className="transition-colors hover:text-amber-500">
-                        <ChevronDown className="size-8 md:size-10" />
-                    </button>
-                </div>
-
+                <FeatureActionsDropdown feature={feature} />{' '}
+               <FeatureUpvoteDownvote feature={feature}/>
                 <div className="flex-1">
                     <h2 className="mb-2 text-2xl font-medium">
                         <Link

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\FeatureResource;
 use App\Models\Feature;
+use App\Models\Upvote;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -22,16 +23,14 @@ class FeatureController extends Controller
             ->withCount(['upvotes as upvote_count' => function ($query) {
                 $query->select(DB::raw('SUM(CASE WHEN upvote = true THEN 1 ELSE -1 END)'));
             }])
-            ->withExists(['upvotes' => function ($query) {
-                $query->where('user_id', auth()->id());
-            }])
-            ->withExists(['upvote as user_has_upvoted' => function ($query) use ($currentUserId) {
-                $query->where('user_id', $currentUserId)
-                ->where('upvote', true);
+            ->withExists([
+                'upvotes as user_has_upvoted' => function ($query) use ($currentUserId) {
+                         $query->where('user_id', $currentUserId)
+                               ->where('upvote', true);
                  },
-                'upvote as user_has_downvoted' => function ($query) use ($currentUserId) {
-                    $query->where('user_id', $currentUserId)
-                        ->where('upvote', false);
+                'upvotes as user_has_downvoted' => function ($query) use ($currentUserId) {
+                        $query->where('user_id', $currentUserId)
+                              ->where('upvote', false);
                 }
 
             ])
@@ -70,6 +69,18 @@ class FeatureController extends Controller
      */
     public function show(Feature $feature)
     {
+        $feature->upvote_count = Upvote::where('feature_id', $feature->id)
+            ->sum(DB::raw('CASE WHEN upvote = true THEN 1 ELSE -1 END'));
+
+        $feature->user_has_upvoted = Upvote::where('feature_id', $feature->id)
+            ->where('user_id', Auth::id())
+            ->where('upvote', true)
+            ->exists();
+        $feature->user_has_downvoted = Upvote::where('feature_id', $feature->id)
+            ->where('user_id', Auth::id())
+            ->where('upvote', false)
+            ->exists();
+
         return Inertia::render('Feature/Show', [
             'feature' => new FeatureResource($feature),
         ]);
