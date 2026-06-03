@@ -45,6 +45,10 @@ export default function FeatureItem({ feature }: { feature: Feature }) {
                             {feature.description}
                         </p>
                     )}
+
+                    <div>
+                        <Link href={route('feature.show', feature)}>Comments</Link>
+                    </div>
                 </div>
             </div>
         </div>
