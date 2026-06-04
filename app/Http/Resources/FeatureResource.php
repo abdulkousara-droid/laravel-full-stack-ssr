@@ -4,6 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use App\Http\Resources\CommentResource;
 
 class FeatureResource extends JsonResource
 {
@@ -24,6 +25,8 @@ class FeatureResource extends JsonResource
             'upvote_count' => $this->upvote_count?:0,
             'user_has_upvoted' => (bool)$this->user_has_upvoted,
             'user_has_downvoted' => (bool)$this->user_has_downvoted,
+            'comments_count' => $this->comments_count ?? 0,
+            'comments' => CommentResource::collection($this->whenLoaded('comments')),
         ];
     }
 }

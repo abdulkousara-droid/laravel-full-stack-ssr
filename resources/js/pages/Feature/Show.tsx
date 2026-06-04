@@ -1,12 +1,11 @@
-import { Head, } from '@inertiajs/react';
-import FeatureItem from "@/components/FeatureItem";
+import { Head } from '@inertiajs/react';
 import type { Feature } from '@/types';
-import { ChevronDown, ChevronUp } from 'lucide-react';
 import FeatureUpvoteDownvote from "@/components/FeatureUpvoteDownvote";
+import NewCommentForm from "@/components/NewCommentForm";
+import CommentItem from "@/components/CommentItem";
 
 
 export default function Show({ feature }: {feature: Feature}) {
-  console.log(feature);
 
     return (
         <>
@@ -23,6 +22,21 @@ export default function Show({ feature }: {feature: Feature}) {
                   </div>
                 </div>
               </div>
+
+              <div className="rounded-xl border border-sidebar-border/70 p-4 dark:border-sidebar-border">
+                <NewCommentForm feature={feature} />
+              </div>
+
+              {feature.comments && feature.comments.length > 0 && (
+                <div className="space-y-3">
+                  <h3 className="text-sm font-medium text-muted-foreground">
+                    Comments ({feature.comments_count})
+                  </h3>
+                  {feature.comments.map((comment) => (
+                    <CommentItem key={comment.id} comment={comment} />
+                  ))}
+                </div>
+              )}
             </div>
         </>
     );
