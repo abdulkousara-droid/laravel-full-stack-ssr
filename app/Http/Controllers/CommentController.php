@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Comment;
 use App\Models\Feature;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CommentController extends Controller
 {
@@ -14,9 +15,10 @@ class CommentController extends Controller
             'comment' => ['required', 'string', 'max:2000'],
         ]);
 
-        $feature->comments()->create([
+        Comment::create([
             'comment' => $data['comment'],
-            'user_id' => auth()->id(),
+            'user_id' => Auth::id(),
+            'feature_id' => $feature->id,
         ]);
 
         return back();

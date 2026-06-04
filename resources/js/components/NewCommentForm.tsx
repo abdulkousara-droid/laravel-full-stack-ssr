@@ -1,8 +1,8 @@
 import { useForm } from '@inertiajs/react';
 import { MessageCircle } from 'lucide-react';
+import InputError from '@/components/input-error';
 import { Button } from '@/components/ui/button';
 import { TextAreaInput } from '@/components/ui/TextAreaInput';
-import InputError from '@/components/input-error';
 import type { Feature } from '@/types';
 
 export default function NewCommentForm({ feature }: { feature: Feature }) {
