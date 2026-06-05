@@ -1,6 +1,9 @@
 <?php
 
+use App\EnumPermissionsEnum;
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\FeatureController;
+use App\Http\Controllers\UpvoteController;
 use Illuminate\Support\Facades\Route;
 use Laravel\Fortify\Features;
 
@@ -13,13 +16,27 @@ Route::redirect('/', '/dashboard');
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::inertia('dashboard', 'dashboard')->name('dashboard');
 
-    Route::resource('/feature', FeatureController::class);
+    Route::resource('feature', FeatureController::class)
+        ->except(['index', 'show'])
+        ->middleware('can:' . EnumPermissionsEnum::ManageFeatures->value);
 
-    Route::post('/feature/{feature}/upvote', [\App\Http\Controllers\UpvoteController::class, 'store'])->name('upvote.store');
-    Route::delete('/upvote/{feature}', [\App\Http\Controllers\UpvoteController::class, 'destroy'])->name('upvote.destroy');
+    Route::get('/feature', [FeatureController::class, 'index'])
+        ->name('feature.index');
 
-    Route::post('/feature/{feature}/comment', [\App\Http\Controllers\CommentController::class, 'store'])->name('comment.store');
-    Route::delete('/comment/{comment}', [\App\Http\Controllers\CommentController::class, 'destroy'])->name('comment.destroy');
+    Route::get('/feature/{feature}', [FeatureController::class, 'show'])
+        ->name('feature.show');
+
+    Route::post('/feature/{feature}/upvote', [UpvoteController::class, 'store'])
+        ->name('upvote.store');
+    Route::delete('/upvote/{feature}', [UpvoteController::class, 'destroy'])
+        ->name('upvote.destroy');
+
+    Route::post('/feature/{feature}/comments', [CommentController::class, 'store'])
+        ->name('comment.store')
+        ->middleware('can:' . EnumPermissionsEnum::ManageComments->value);
+    Route::delete('/comment/{comment}', [CommentController::class, 'destroy'])
+        ->name('comment.destroy')
+        ->middleware('can:' . EnumPermissionsEnum::ManageComments->value);
 });
 
 

@@ -1,11 +1,14 @@
-import { useForm } from '@inertiajs/react';
+import { useForm, usePage } from '@inertiajs/react';
 import { MessageCircle } from 'lucide-react';
 import InputError from '@/components/input-error';
 import { Button } from '@/components/ui/button';
 import { TextAreaInput } from '@/components/ui/TextAreaInput';
+import { can } from '@/helpers';
 import type { Feature } from '@/types';
 
 export default function NewCommentForm({ feature }: { feature: Feature }) {
+    const user = usePage().props.auth.user
+
     const { data, setData, post, processing, errors, reset } = useForm({
         comment: '',
     });
@@ -18,7 +21,16 @@ export default function NewCommentForm({ feature }: { feature: Feature }) {
         });
     };
 
+    if (!can(user, 'manage_comments')){
+      return(
+        <div className={'text-center text-gary-600'}>
+          You don't have permission to leave comments
+        </div>
+      );
+    }
+
     return (
+      <div className="rounded-xl border border-sidebar-border/70 p-4 dark:border-sidebar-border">
         <form onSubmit={submit} className="space-y-3">
             <div className="flex items-center gap-2">
                 <MessageCircle className="size-4 text-muted-foreground" />
@@ -36,5 +48,6 @@ export default function NewCommentForm({ feature }: { feature: Feature }) {
                 {processing ? 'Posting...' : 'Post Comment'}
             </Button>
         </form>
+      </div>
     );
 }

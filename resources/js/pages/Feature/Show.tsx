@@ -23,9 +23,9 @@ export default function Show({ feature }: {feature: Feature}) {
                 </div>
               </div>
 
-              <div className="rounded-xl border border-sidebar-border/70 p-4 dark:border-sidebar-border">
+
                 <NewCommentForm feature={feature} />
-              </div>
+
 
               {feature.comments && feature.comments.length > 0 && (
                 <div className="space-y-3">

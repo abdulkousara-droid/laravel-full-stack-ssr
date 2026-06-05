@@ -8,34 +8,8 @@ export type User = {
     created_at: string;
     updated_at: string;
     [key: string]: unknown;
-    permissions: string[];
+    permission: string[];
     roles: string[];
-};
-
-export type Comment = {
-    id: number;
-    comment: string;
-    user: User;
-    created_at: string;
-    can_delete: boolean;
-};
-
-export type PaginatedData<T> = {
-    data: T[];
-    links: Record<string, string>
-};
-
-export type Feature = {
-    id: number;
-    name: string;
-    description: string;
-    user: User;
-    created_at: string;
-    upvote_count: number;
-    user_has_upvoted: boolean;
-    user_has_downvoted: boolean;
-    comments_count?: number;
-    comments?: Comment[];
 };
 
 export type Auth = {

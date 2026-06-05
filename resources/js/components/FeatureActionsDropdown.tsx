@@ -1,4 +1,4 @@
-import {Link, router} from "@inertiajs/react";
+import { Link, router, usePage } from '@inertiajs/react';
 import { MoreHorizontal } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
@@ -7,15 +7,20 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
+import { can } from '@/helpers';
 import type { Feature } from '@/types';
 
 export default function FeatureActionsDropdown({feature}: { feature: Feature }) {
-
+    const user = usePage().props.auth.user
   const handleDelete = () => {
       if (confirm('Are you sure you want to delete this feature?')) {
           router.delete(route('feature.destroy', feature.id));
       }
   };
+
+  if (!can(user, 'manage_features')) {
+      return;
+  }
 
   return (
       <div className="absolute top-4 right-4 z-10">

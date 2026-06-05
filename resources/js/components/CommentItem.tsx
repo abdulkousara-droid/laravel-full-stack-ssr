@@ -1,11 +1,14 @@
-import { router } from '@inertiajs/react';
+import { router, usePage } from '@inertiajs/react';
 import { Trash2 } from 'lucide-react';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { useInitials } from '@/hooks/use-initials';
 import type { Comment } from '@/types';
+import { can } from '@/helpers';
 
 export default function CommentItem({ comment }: { comment: Comment }) {
+    const user = usePage().props.auth.user
+
     const getInitials = useInitials();
 
     const handleDelete = () => {
@@ -31,7 +34,7 @@ export default function CommentItem({ comment }: { comment: Comment }) {
                 </div>
                 <p className="text-sm text-muted-foreground">{comment.comment}</p>
             </div>
-            {comment.can_delete && (
+            {can(user, 'manage_comments') && comment.can_delete && (
                 <Button
                     variant="ghost"
                     size="icon"
