@@ -7,8 +7,8 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 class AuthUserResource extends JsonResource
 {
-
     public static $wrap = false;
+
     /**
      * Transform the resource into an array.
      *
@@ -16,14 +16,17 @@ class AuthUserResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        return[
+        return [
             'id' => $this->id,
             'name' => $this->name,
+            'created_at' => $this->created_at->format('Y-m-d H:i:s'),
             'email' => $this->email,
             'email_verified_at' => $this->email_verified_at,
-            'permission' => $this->getAllPermissions()->map(fn ($permission) => $permission->name),
+            'permissions' => $this->getAllPermissions()
+                ->map(function ($permission) {
+                    return $permission->name;
+                }),
             'roles' => $this->getRoleNames()
-
         ];
     }
 }

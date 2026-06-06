@@ -30,9 +30,7 @@ export default function Index({ features }: {features: PaginatedData<Feature>}) 
                 )}
 
                 {features.data.map((feature) => (
-                    <>
-                        <FeatureItem feature={feature} />
-                    </>
+                    <FeatureItem key={feature.id} feature={feature} />
                 ))}
             </div>
         </>
