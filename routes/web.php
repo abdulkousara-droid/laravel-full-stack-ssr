@@ -1,6 +1,7 @@
 <?php
 
 use App\EnumPermissionsEnum;
+use App\EnumRolesEnum;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\FeatureController;
 use App\Http\Controllers\UpvoteController;
@@ -13,7 +14,7 @@ Route::inertia('/', 'welcome', [
 
 Route::redirect('/', '/dashboard');
 
-Route::middleware(['auth', 'verified'])->group(function () {
+Route::middleware(['auth', 'verified', 'role:' . EnumRolesEnum::User->value])->group(function () {
     Route::inertia('dashboard', 'dashboard')->name('dashboard');
 
     Route::resource('feature', FeatureController::class)
